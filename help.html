@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)file:///D:/GitHub/fetch/help/help.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OICPP sampleTester - 使用指南</title>
+    <link rel="icon" href="https://oicpp.mywwzh.top/oicpp.png">
+    <style>
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(to right, #e0f7fa, #c8e6c9); /* 柔和的渐变背景 */
+            color: #343a40;
+        }
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px; /* 更大的圆角 */
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08); /* 更柔和的阴影 */
+        }
+        h1, h2, h3 {
+            color: #007bff; /* 主题蓝色 */
+            margin-top: 1.5em;
+            margin-bottom: 0.8em;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #0056b3;
+        }
+        h2 {
+            font-size: 1.8em;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+        h3 {
+            font-size: 1.4em;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        code {
+            background-color: #e9ecef;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
+            font-size: 0.95em;
+            color: #c22d2d;
+        }
+        pre {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5em;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        ul, ol {
+            padding-left: 25px;
+            margin-bottom: 1.5em;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.2s ease-in-out;
+        }
+        a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        .note {
+            background-color: #e0f7fa;
+            border-left: 5px solid #00bcd4;
+            padding: 18px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            color: #005660;
+        }
+        .note strong {
+            color: #003f47;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OICPP sampleTester - 使用指南</h1>
+
+        <p>欢迎使用“OICPP sampleTester”油猴脚本！本脚本旨在帮助您从支持的在线评测系统（OJ）页面中快速提取代码样例，并将其发送到本地的 OICPP 以创建新的题目。</p>
+
+        <div class="note">
+            <strong>重要提示：</strong> 本脚本需要您已安装并运行 <a href="https://oicpp.mywwzh.top/" target="_blank">OICPP</a> 以及 Tampermonkey 浏览器扩展。
+        </div>
+
+        <h2>一、前置条件</h2>
+        <ol>
+            <li>
+                <strong>安装 Tampermonkey 扩展：</strong>
+                <p>请确保您的浏览器（Chrome, Edge, Firefox 等）已安装 Tampermonkey 扩展。您可以从各自的浏览器应用商店安装它：</p>
+                <ul>
+                    <li><a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo" target="_blank">Chrome 应用商店</a></li>
+                    <li><a href="https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpbldmmepgdkmfapmmhgkdahlk" target="_blank">Edge 附加组件</a></li>
+                    <li><a href="https://addons.mozilla.org/zh-CN/firefox/addon/tampermonkey/" target="_blank">Firefox 附加组件</a></li>
+                </ul>
+            </li>
+            <li>
+                <strong>运行 OICPP 服务：</strong>
+                <p>本脚本需要一个在本地运行的本地 OICPP 服务来接收数据。请确保您的 OICPP 服务已启动并正常运行。</p>
+            </li>
+        </ol>
+
+        <h2>二、安装脚本</h2>
+        <ol>
+            <li>
+                <strong>获取脚本文件：</strong>
+                <p>您应该有一个名为 <code>fetch_tampermonkey.user.js</code> 的油猴脚本文件。</p>
+            </li>
+            <li>
+                <strong>导入到 Tampermonkey：</strong>
+                <ul>
+                    <li>打开您的浏览器，点击 Tampermonkey 扩展图标。</li>
+                    <li>选择“创建新脚本”或“仪表板”。</li>
+                    <li>如果您选择了“创建新脚本”，请删除所有默认内容，然后将 <code>fetch_tampermonkey.user.js</code> 文件的全部内容复制并粘贴到编辑器中。</li>
+                    <li>如果您进入了“仪表板”，可以点击左侧的“实用工具”选项卡，然后找到“从文件导入”或“从 URL 安装”选项。选择您的 <code>.user.js</code> 文件进行导入。</li>
+                    <li>保存脚本（通常是点击文件菜单中的“保存”图标或按下 <code>Ctrl + S</code>）。</li>
+                </ul>
+            </li>
+            <li>
+                <strong>确认脚本已启用：</strong>
+                <p>在 Tampermonkey 仪表板中，确保“样例抓取器”脚本旁边的开关已打开（绿色或蓝色），表示它已启用。</p>
+            </li>
+        </ol>
+
+        <h2>三、使用脚本</h2>
+        <p>脚本会在以下支持的 OJ 网站上自动激活：</p>
+        <ul>
+            <li><code>https://luogu.com.cn/*</code></li>
+            <li><code>https://www.luogu.com.cn/*</code></li>
+            <li><code>https://htoj.com.cn/*</code></li>
+            <li><code>https://atcoder.jp/*</code></li>
+            <li><code>https://codeforces.com/*</code></li>
+        </ul>
+
+        <h3>操作步骤：</h3>
+        <ol>
+            <li>
+                <strong>访问题目页面：</strong>
+                <p>在上述任何一个支持的 OJ 网站上，打开一个题目页面。</p>
+            </li>
+            <li>
+                <strong>寻找“样例抓取器”按钮：</strong>
+                <p>页面加载后，您会在浏览器窗口的右上角看到一个名为“⬇️”的蓝色按钮。这是用于下载样例的按钮，其可以被拖动。</p>
+            </li>
+            <li>
+                <strong>点击按钮：</strong>
+                <p>点击此按钮。脚本将尝试自动提取页面上的样例代码和题目名称。</p>
+                <ul>
+                    <li>如果成功提取，它将把数据发送到您的本地 OICPP 服务，并在按钮附近显示一个临时的状态消息（例如“成功: 题目已创建”）。</li>
+                    <li>如果遇到问题（例如未找到样例或 OICPP 服务未运行），会弹出警告框并显示错误消息。</li>
+                </ul>
+            </li>
+            <li>
+                <strong>手动面板（仅限 HTOJ 以外的网站）：</strong>
+                <p>在某些网站上，点击按钮可能会弹出一个更详细的面板，允许您手动输入 OJ 名称和题目名称，然后点击“提取代码并创建题目”按钮。</p>
+            </li>
+        </ol>
+
+        <h2>四、故障排除</h2>
+        <ul>
+            <li>
+                <strong>脚本未显示或未工作：</strong>
+                <ul>
+                    <li>确保 Tampermonkey 扩展已安装并启用。</li>
+                    <li>在 Tampermonkey 仪表板中，检查“样例抓取器”脚本是否已启用。</li>
+                    <li>刷新题目页面。</li>
+                    <li>检查浏览器控制台（按 <code>F12</code> 打开）是否有任何错误消息。</li>
+                </ul>
+            </li>
+            <li>
+                <strong>“请求失败”错误：</strong>
+                <ul>
+                    <li>这通常意味着 OICPP 服务未在 <code>http://127.0.0.1:20030</code> 运行或无法访问。请确保您的 OICPP 服务已启动。</li>
+                    <li>检查您的防火墙设置，确保它没有阻止浏览器与本地 OICPP 服务之间的通信。</li>
+                </ul>
+            </li>
+            <li>
+                <strong>未找到任何 <code> 标签可提取</code>：</strong>            <ul>
+                <li>这表示脚本无法在当前页面上找到预期的代码样例元素。这可能是因为网站结构发生了变化，或者当前页面没有可识别的样例。</li>
+                <li>您可以尝试在 Tampermonkey 脚本中修改 <code>DOMAIN_CONFIG</code> 部分的 <code>codeSelectors</code> 来适应新的网站结构（如果您了解 JavaScript 和 CSS 选择器）。</li>
+                <li>如果您没有此类经验，可以联系开发人员并让他们进行修改</li>
+            </ul></li></ul><p>如果您遇到其他问题，请联系脚本作者或查阅 OICPP 的相关文档。</p></div></body></html>

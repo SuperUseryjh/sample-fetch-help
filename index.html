@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)file:///D:/GitHub/fetch/help/index.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OICPP sampleTester - 样例抓取器</title>
+    <link rel="icon" href="https://oicpp.mywwzh.top/oicpp.png">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* 防止水平滚动 */
+        }
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            background: linear-gradient(to right, #e0f7fa, #c8e6c9); /* 柔和的渐变背景 */
+            color: #343a40;
+        }
+
+        /* 介绍部分 - 占据整个视口高度 */
+        .intro-section {
+            height: 100vh; /* 占据整个视口高度 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 垂直居中内容 */
+            align-items: center; /* 水平居中内容 */
+            text-align: center;
+            padding: 20px; /* 增加一些内边距 */
+            box-sizing: border-box; /* 确保内边距包含在高度内 */
+        }
+
+        .intro-card {
+            max-width: 600px; /* 限制卡片宽度 */
+            background: linear-gradient(to right, #d1ecf1, #cce5ff); /* 柔和的渐变背景 */
+            padding: 40px; /* 增加内边距 */
+            border-radius: 15px; /* 稍大的圆角 */
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* 更明显的阴影 */
+            color: #004085;
+            border: 1px solid #a7d9ed; /* 稍深的边框 */
+            margin-bottom: 30px; /* 卡片与提示之间的间距 */
+        }
+        .intro-card h2 {
+            color: #004085;
+            font-size: 2.8em; /* 更大的标题 */
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .intro-card p {
+            font-size: 1.2em; /* 更大的文本 */
+            margin-bottom: 0;
+        }
+
+        .scroll-down-prompt {
+            font-size: 1.2em;
+            color: #0056b3;
+            animation: bounce 2s infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .scroll-down-prompt span {
+            margin-top: 10px; /* 文本与箭头之间的间距 */
+            font-size: 1.5em; /* 更大的箭头 */
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); } /* 更明显的弹跳 */
+            60% { transform: translateY(-7px); }
+        }
+
+        /* 主要内容容器 */
+        .container {
+            max-width: 850px;
+            margin: 60px auto; /* 主要内容上方留出更多空间 */
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+        h1, h2, h3 {
+            color: #007bff;
+            margin-top: 1.5em;
+            margin-bottom: 0.8em;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #0056b3;
+        }
+        h2 {
+            font-size: 1.8em;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+        h3 {
+            font-size: 1.4em;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        code {
+            background-color: #e9ecef;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
+            font-size: 0.95em;
+            color: #c22d2d;
+        }
+        pre {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5em;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        ul, ol {
+            padding-left: 25px;
+            margin-bottom: 1.5em;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.2s ease-in-out;
+        }
+        a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        .help-link {
+            display: block;
+            text-align: center;
+            margin-top: 40px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .quick-navigation {
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #f0f8ff; /* 浅蓝色背景 */
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .quick-navigation h3 {
+            color: #007bff;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+        .quick-navigation .help-link {
+            margin-top: 0; /* 移除p.help-link自带的margin-top */
+        }
+    </style>
+</head>
+<body>
+    <div class="intro-section">
+        <div class="intro-card">
+            <h2>OICPP sampleTester</h2>
+            <p>一个帮助您快速抓取 OJ 题目样例的工具。</p>
+            <p>Developed by Mr_Onion &amp; mywwzh
+</p>
+        </div>
+        <div class="scroll-down-prompt">
+            下滑查看更多
+            <span>👇</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>OICPP sampleTester</h1>
+        <div class="quick-navigation">
+            <h3>快速导航</h3>
+            <p class="help-link"><a href="file:///D:/GitHub/fetch/help/help.html">查看详细使用指南</a></p>
+        </div>
+        <p>这是一个 Tampermonkey 用户脚本，旨在帮助用户从各种在线评测系统（Online Judge, OJ）页面中快速提取代码片段（通常是输入/输出样例），并将其发送到本地运行的 API 服务，以便创建新的题目。</p>
+
+        <h2>功能特性</h2>
+        <ul>
+            <li><strong>多平台支持：</strong> 兼容多个主流 OJ 平台，自动识别并提取页面上的代码样例。</li>
+            <li><strong>本地 API 集成：</strong> 将提取到的样例数据和题目信息发送到本地 API 进行处理。</li>
+            <li><strong>简洁的用户界面：</strong> 在页面上提供一个可拖动的图标按钮，点击即可触发抓取和发送操作。</li>
+            <li><strong>实时状态反馈：</strong> 通过页面上的临时消息提示，显示操作进度和结果。</li>
+            <li><strong>智能题目信息填充：</strong> 尝试自动抓取当前页面的 OJ 名称和题目名称。</li>
+        </ul>
+
+        <h2>支持的平台</h2>
+        <ul>
+            <li><strong>洛谷 (Luogu):</strong> <code>luogu.com.cn</code>, <code>www.luogu.com.cn</code></li>
+            <li><strong>核桃 OJ (HTOJ):</strong> <code>htoj.com.cn</code></li>
+            <li><strong>AtCoder:</strong> <code>atcoder.jp</code></li>
+            <li><strong>Codeforces:</strong> <code>codeforces.com</code></li>
+        </ul>
+
+        <h2>安装</h2>
+        <p>本脚本需要：</p>
+        <ul>
+            <li><a href="https://www.tampermonkey.net/" target="_blank">Tampermonkey</a> 浏览器扩展程序。</li>
+            <li><a href="file:///D:/GitHub/fetch/help/oicpp.mywwth.top" target="_blank">OICPP</a> 本地处理样例</li>
+        </ul>
+        <ol>
+            <li>
+                <strong>安装 Tampermonkey：：</strong> 如果你尚未安装，请根据你的浏览器（Chrome, Firefox, Edge 等）安装 Tampermonkey 扩展程序。
+            </li>
+            <li>
+                <strong>安装脚本：</strong>
+                <p><a herf="https://oicpp.mywwzh.top/download">从 OICPP 官网下载</a></p>
+            </li>
+        </ol>
+
+        <h2>使用方法</h2>
+        <ol>
+            <li>
+                <strong>访问支持的 OJ 页面：</strong> 在浏览器中打开一个支持的 OJ 网站上的题目页面。
+            </li>
+            <li>
+                <strong>点击图标按钮：</strong> 在页面的右上角，你会看到一个可拖动的 <strong>⬇️</strong> 图标按钮。点击它。
+            </li>
+            <li>
+                <strong>查看状态：</strong> 脚本将自动提取页面上的样例和题目信息，并尝试发送到本地 API。操作过程中，页面右上角会显示一个临时状态消息（例如“正在提取代码并发送请求...”），并在操作完成后显示成功或失败信息。
+                <ul>
+                    <li>如果 OJ 或题目名称无法自动获取，或者没有找到可提取的 <code>&lt;code&gt;</code> 标签，会弹出警告并显示错误消息。</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2>故障排除</h2>
+        <ul>
+            <li>
+                <strong>“请求失败: ... 请确认oicpp是否正在运行。”：</strong> 这通常意味着你的本地 API 服务（<code>oicpp</code>）没有运行，或者运行在不同的端口。请检查你的 API 服务状态。
+            </li>
+            <li>
+                <strong>按钮不显示或功能不正常：</strong> 确保 Tampermonkey 扩展已启用，并且脚本已正确安装并处于活动状态。尝试刷新页面。
+            </li>
+        </ul>
+
+        <h2>作者</h2>
+        <p>Mr_Onion &amp; mywwzh</p>
+
+        <h2>许可证</h2>
+        <p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank">CC-BY-NC-SA-4.0</a></p>
+
+        </div>
+
+</body></html>
